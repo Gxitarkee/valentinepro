@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine 💘</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;}
+
+body{
+    margin:0;
+    font-family:'Prompt',sans-serif;
+    background:linear-gradient(135deg,#ff9ecb,#ff4da6);
+    overflow-x:hidden;
+}
+
+/* ❤️ หัวใจพื้นหลัง */
+.hearts{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+}
+
+.heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:20px;
+    animation:floatUp linear infinite;
+    opacity:.7;
+}
+
+@keyframes floatUp{
+    0%{transform:translateY(0) scale(1);opacity:0;}
+    10%{opacity:.7;}
+    100%{transform:translateY(-110vh) scale(1.6);opacity:0;}
+}
+
+/* content */
+.screen{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:40px 20px;
+}
+
+.hidden{display:none;}
+
+/* LOGIN */
+input{
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    width:220px;
+    text-align:center;
+    font-size:16px;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 25px;
+    border:none;
+    border-radius:25px;
+    background:white;
+    color:#ff1493;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{transform:scale(1.05);}
+
+/* PAGES */
+.page{
+    display:none;
+    max-width:600px;
+    animation:fade .6s ease;
+}
+
+.page.active{display:block;}
+
+@keyframes fade{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* PHOTO */
+.photo-section{
+    margin-top:30px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+}
+
+.polaroid{
+    width:170px;
+    background:#fff;
+    padding:12px 12px 28px;
+    border-radius:10px;
+    box-shadow:0 20px 35px rgba(0,0,0,.35);
+    opacity:0;
+    transform:scale(0.3) translateY(-100px);
+    transition:all .8s cubic-bezier(.17,.67,.3,1.4);
+    text-align:center;
+}
+
+.polaroid img{
+    width:100%;
+    border-radius:6px;
+}
+
+.caption{
+    font-size:13px;
+    color:#444;
+    margin-top:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="screen" id="login">
+    <h1>🔐 ใส่รหัสก่อนเปิดความทรงจำ 💕</h1>
+    <input type="password" id="password" placeholder="รหัสของเรา">
+    <button onclick="checkPass()">เปิดเลย 💘</button>
+</div>
+
+<div class="screen hidden" id="valentine">
+
+    <div class="page active">
+        <h1>Happy Valentine’s Day 🤍</h1>
+        <p>วันนี้เป็นวันพิเศษของเรา 💕</p>
+        <button onclick="nextPage()">ถัดไป ➜</button>
+    </div>
+
+    <div class="page">
+        <h2>ขอบคุณที่เข้ามาในชีวิตเค้า</h2>
+        <p>ตั้งแต่วันนั้น ทุกอย่างมันดีขึ้นมากเลยนะ 🥹</p>
+        <button onclick="nextPage()">ถัดไป ➜</button>
+    </div>
+
+    <div class="page">
+        <h2>อยู่ข้างกันไปนาน ๆ นะ</h2>
+        <p>ไม่ว่าจะเกิดอะไรขึ้น เค้าจะจับมือเธอไว้ 🤍</p>
+        <button onclick="nextPage()">ถัดไป ➜</button>
+    </div>
+
+    <div class="page">
+        <h2>ความทรงจำของเรา 💘</h2>
+        <div class="photo-section" id="photoSection"></div>
+        <button onclick="nextPage()">ถัดไป ➜</button>
+    </div>
+
+    <div class="page">
+        <h1>รักที่สุดเลย ❤️</h1>
+        <p>และจะรักแบบนี้ตลอดไป ✨</p>
+    </div>
+
+</div>
+
+<!-- 🎵 แก้ audio สำหรับ iPhone -->
+<audio id="bgm" loop playsinline preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("bgm");
+
+/* 🎵 เริ่มเพลงแบบ iPhone-safe + fade in */
+function startMusic(){
+    if(!music.paused) return;
+
+    music.volume = 0;
+    music.play().then(()=>{
+        let fade = setInterval(()=>{
+            if(music.volume < 0.6){
+                music.volume += 0.05;
+            }else{
+                clearInterval(fade);
+            }
+        },200);
+    }).catch(()=>{});
+}
+
+/* ❤️ หัวใจลอย */
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"%";
+    heart.style.fontSize=(15+Math.random()*25)+"px";
+    heart.style.animationDuration=(5+Math.random()*5)+"s";
+    document.getElementById("hearts").appendChild(heart);
+    setTimeout(()=>{heart.remove();},10000);
+}
+setInterval(createHeart,400);
+
+/* 📱 บังคับให้ iPhone ยอมเล่นเสียงเมื่อแตะจอ */
+document.addEventListener("touchstart", function firstTouch(){
+    startMusic();
+    document.removeEventListener("touchstart", firstTouch);
+});
+
+/* PHOTO DATA */
+const photos = [
+{src:"photo1.jpg",text:"วันแรกของเรา 💕"},
+{src:"photo2.jpg",text:"วันที่หัวเราะไม่หยุด 😂"},
+{src:"photo3.jpg",text:"โมเมนต์อบอุ่นที่สุด 🥰"},
+{src:"photo4.jpg",text:"ทริปที่ไม่มีวันลืม ✈️"},
+{src:"photo5.jpg",text:"วันที่กอดแน่นที่สุด 🤍"},
+{src:"photo6.jpg",text:"วันธรรมดาที่พิเศษ ✨"},
+{src:"photo7.jpg",text:"รูปที่เค้าชอบที่สุด 💗"},
+{src:"photo8.jpg",text:"เธอยิ้มหวานมาก 😍"},
+{src:"photo9.jpg",text:"ช่วงเวลาที่คิดถึง 🫶"},
+{src:"photo10.jpg",text:"ความทรงจำตลอดไป 💞"},
+{src:"photo11.jpg",text:"อีกหนึ่งความสุข 🌷"},
+{src:"photo12.jpg",text:"วันที่หัวใจเต้นแรง 💓"},
+{src:"photo13.jpg",text:"ความสุขเล็ก ๆ ของเรา 🌸"},
+{src:"photo14.jpg",text:"อยู่ด้วยกันแล้วสบายใจ 🤍"},
+{src:"photo15.jpg",text:"เสียงหัวเราะของเธอ 🎶"},
+{src:"photo16.jpg",text:"ภาพที่มองแล้วใจละลาย 💖"},
+{src:"photo17.jpg",text:"วันธรรมดาที่มีค่า 💫"},
+{src:"photo18.jpg",text:"ช่วงเวลาที่อยากหยุดเวลา ⏳"},
+{src:"photo19.jpg",text:"ขอบคุณที่อยู่ข้างกัน 💕"},
+{src:"photo20.jpg",text:"และจะรักแบบนี้ตลอดไป ❤️"}
+];
+
+let currentPage=0;
+let openedPhotos=false;
+const pages=document.querySelectorAll(".page");
+
+function checkPass(){
+    const pass=document.getElementById("password").value.trim();
+    if(pass==="280418"){
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("valentine").classList.remove("hidden");
+        startMusic(); // เล่นหลังจากกดจริง
+    }else{
+        alert("รหัสผิดนะ 🤭");
+    }
+}
+
+function nextPage(){
+    pages[currentPage].classList.remove("active");
+    currentPage++;
+    if(currentPage >= pages.length) return;
+    pages[currentPage].classList.add("active");
+
+    if(currentPage===3 && !openedPhotos){
+        showPhotos();
+        openedPhotos=true;
+    }
+}
+
+function showPhotos(){
+    const section=document.getElementById("photoSection");
+
+    photos.forEach((p,index)=>{
+        let card=document.createElement("div");
+        card.className="polaroid";
+        card.innerHTML=`
+            <img src="${p.src}">
+            <div class="caption">${p.text}</div>
+        `;
+        section.appendChild(card);
+
+        setTimeout(()=>{
+            card.style.opacity="1";
+            card.style.transform="scale(1) translateY(0)";
+        },index*300);
+    });
+}
+</script>
+
+</body>
+</html>
