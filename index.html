@@ -146,6 +146,63 @@ button:hover{transform:scale(1.05);}
 .song-link:hover{
     transform:scale(1.05);
 }
+  /* ===== ซองจดหมาย ===== */
+
+.envelope-wrapper{
+    margin-bottom:30px;
+    cursor:pointer;
+}
+
+.envelope{
+    position:relative;
+    width:360px;
+    height:220px;
+    background:white;
+    border-radius:12px;
+    box-shadow:0 20px 35px rgba(0,0,0,.35);
+    overflow:hidden;
+    margin:auto;
+}
+
+.flap{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#ff6fa5;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    transform-origin:top;
+    transition:transform .8s ease;
+    z-index:3;
+}
+
+.envelope.open .flap{
+    transform:rotateX(180deg);
+}
+
+.letter{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    text-align:center;
+    z-index:2;
+    color:#ff1493;
+}
+
+.letter h1{
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.letter h2{
+    font-size:14px;
+    font-weight:normal;
+}
+
 </style>
 </head>
 
@@ -154,11 +211,23 @@ button:hover{transform:scale(1.05);}
 <div class="hearts" id="hearts"></div>
 
 <div class="screen" id="login">
-    <h1>🔐 ใส่รหัสก่อนครับพี่ 💕</h1>
-  <h2>🔐 วันเกิดพี่วันเกิดเค้าวันครบรอบครับ 💕</h2>
+
+    <div class="envelope-wrapper" onclick="openEnvelope()">
+        <div class="envelope" id="envelope">
+            <div class="flap"></div>
+
+            <div class="letter">
+                <h1>🔐 ใส่รหัสก่อนครับพี่ 💕</h1>
+                <h2>🔐 วันเกิดพี่วันเกิดเค้าวันครบรอบครับ 💕</h2>
+            </div>
+        </div>
+    </div>
+
     <input type="password" id="password" placeholder="ใส่รหัสมาอย่าลีลา">
     <button onclick="checkPass()">เปิดเลยรออะไยยย 💘</button>
+
 </div>
+
 
 <div class="screen hidden" id="valentine">
 
@@ -223,6 +292,10 @@ button:hover{transform:scale(1.05);}
 </div>
 
 <script>
+  function openEnvelope(){
+    document.getElementById("envelope").classList.toggle("open");
+}
+
 
 function createHeart(){
     const heart=document.createElement("div");
@@ -313,4 +386,5 @@ function showPhotos(){
 
 </body>
 </html>
+
 
