@@ -44,7 +44,6 @@ body{
     100%{transform:translateY(-110vh) scale(1.6);opacity:0;}
 }
 
-/* 💥 เอฟเฟกต์แตก */
 @keyframes explode{
     0%{transform:scale(1);}
     50%{transform:scale(2);}
@@ -175,32 +174,42 @@ button:hover{transform:scale(1.05);}
     <div class="page">
         <h1>รักที่สุดเลย ❤️</h1>
         <p>และจะรักแบบนี้ตลอดไป ✨</p>
+        <button onclick="stopMusic()">ปิดเพลงของเรา 🎵</button>
     </div>
 
 </div>
 
-<audio id="bgm" loop playsinline preload="auto">
-    <source src="music.mp3" type="audio/mpeg">
-</audio>
+<!-- 🎵 YouTube Music -->
+<div id="ytBox" style="position:fixed; bottom:10px; right:10px; display:none; z-index:999;">
+    <iframe
+        id="ytPlayer"
+        width="250"
+        height="140"
+        src=""
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+    </iframe>
+</div>
 
 <script>
-const music = document.getElementById("bgm");
+const videoId = "dCEvQ69aGYs";
+let musicStarted = false;
 
-/* 🎵 iPhone-safe */
 function startMusic(){
-    if(!music.paused) return;
-    music.volume=0;
-    music.play().then(()=>{
-        let fade=setInterval(()=>{
-            if(music.volume<0.7){
-                music.volume+=0.05;
-            }else clearInterval(fade);
-        },200);
-    }).catch(()=>{});
+    if(musicStarted) return;
+    const player = document.getElementById("ytPlayer");
+    player.src =
+        "https://www.youtube.com/embed/" +
+        videoId +
+        "?autoplay=1&loop=1&playlist=" + videoId;
+    document.getElementById("ytBox").style.display = "block";
+    musicStarted = true;
 }
 
-document.addEventListener("click",startMusic,{once:true});
-document.addEventListener("touchstart",startMusic,{once:true});
+function stopMusic(){
+    document.getElementById("ytPlayer").src = "";
+}
 
 /* ❤️ หัวใจ */
 function createHeart(){
@@ -222,7 +231,7 @@ function createHeart(){
 }
 setInterval(createHeart,400);
 
-/* 📸 รูปครบ 20 */
+/* 📸 รูป */
 const photos=[
 {src:"photo1.jpg",text:"วันแรกของเรา 💕"},
 {src:"photo2.jpg",text:"วันที่หัวเราะไม่หยุด 😂"},
@@ -275,7 +284,6 @@ function nextPage(){
 
 function showPhotos(){
     const section=document.getElementById("photoSection");
-
     photos.forEach((p,index)=>{
         let card=document.createElement("div");
         card.className="polaroid";
@@ -295,5 +303,3 @@ function showPhotos(){
 
 </body>
 </html>
-
-
