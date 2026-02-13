@@ -17,7 +17,6 @@ body{
     overflow-x:hidden;
 }
 
-/* ❤️ หัวใจพื้นหลัง */
 .hearts{
     position:fixed;
     width:100%;
@@ -101,7 +100,6 @@ button:hover{transform:scale(1.05);}
     to{opacity:1; transform:translateY(0);}
 }
 
-/* 📸 Photo Layout */
 .photo-section{
     margin-top:30px;
     display:flex;
@@ -131,6 +129,22 @@ button:hover{transform:scale(1.05);}
     font-size:13px;
     color:#444;
     margin-top:8px;
+}
+
+.song-link{
+    margin-top:25px;
+    display:inline-block;
+    padding:12px 28px;
+    background:white;
+    color:#ff1493;
+    border-radius:30px;
+    font-weight:bold;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.song-link:hover{
+    transform:scale(1.05);
 }
 </style>
 </head>
@@ -174,44 +188,22 @@ button:hover{transform:scale(1.05);}
     <div class="page">
         <h1>รักที่สุดเลย ❤️</h1>
         <p>และจะรักแบบนี้ตลอดไป ✨</p>
-        <button onclick="stopMusic()">ปิดเพลงของเรา 🎵</button>
+
+        <p style="margin-top:25px; font-size:18px;">
+            เพลงนี้เค้าให้พี่นะ อย่าลืมกดฟังนะครับ 💕
+        </p>
+
+        <a class="song-link"
+           href="https://youtu.be/dCEvQ69aGYs?si=Kyuurq79sSSB2U4l"
+           target="_blank">
+           🎵 กดฟังเพลงของเรา
+        </a>
     </div>
 
 </div>
 
-<!-- 🎵 YouTube Music -->
-<div id="ytBox" style="position:fixed; bottom:10px; right:10px; display:none; z-index:999;">
-    <iframe
-        id="ytPlayer"
-        width="250"
-        height="140"
-        src=""
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen>
-    </iframe>
-</div>
-
 <script>
-const videoId = "dCEvQ69aGYs";
-let musicStarted = false;
 
-function startMusic(){
-    if(musicStarted) return;
-    const player = document.getElementById("ytPlayer");
-    player.src =
-        "https://www.youtube.com/embed/" +
-        videoId +
-        "?autoplay=1&loop=1&playlist=" + videoId;
-    document.getElementById("ytBox").style.display = "block";
-    musicStarted = true;
-}
-
-function stopMusic(){
-    document.getElementById("ytPlayer").src = "";
-}
-
-/* ❤️ หัวใจ */
 function createHeart(){
     const heart=document.createElement("div");
     heart.className="heart";
@@ -231,7 +223,6 @@ function createHeart(){
 }
 setInterval(createHeart,400);
 
-/* 📸 รูป */
 const photos=[
 {src:"photo1.jpg",text:"วันแรกของเรา 💕"},
 {src:"photo2.jpg",text:"วันที่หัวเราะไม่หยุด 😂"},
@@ -264,7 +255,6 @@ function checkPass(){
     if(pass==="280418"){
         document.getElementById("login").classList.add("hidden");
         document.getElementById("valentine").classList.remove("hidden");
-        startMusic();
     }else{
         alert("รหัสผิดนะ 🤭");
     }
