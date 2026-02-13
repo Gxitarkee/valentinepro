@@ -34,16 +34,23 @@ body{
     bottom:-20px;
     font-size:20px;
     animation:floatUp linear infinite;
-    opacity:.7;
+    opacity:.8;
+    cursor:pointer;
 }
 
 @keyframes floatUp{
     0%{transform:translateY(0) scale(1);opacity:0;}
-    10%{opacity:.7;}
+    10%{opacity:.8;}
     100%{transform:translateY(-110vh) scale(1.6);opacity:0;}
 }
 
-/* content */
+/* 💥 เอฟเฟกต์แตก */
+@keyframes explode{
+    0%{transform:scale(1);}
+    50%{transform:scale(2);}
+    100%{transform:scale(0);opacity:0;}
+}
+
 .screen{
     position:relative;
     z-index:1;
@@ -59,7 +66,6 @@ body{
 
 .hidden{display:none;}
 
-/* LOGIN */
 input{
     padding:12px;
     border:none;
@@ -83,10 +89,9 @@ button{
 
 button:hover{transform:scale(1.05);}
 
-/* PAGES */
 .page{
     display:none;
-    max-width:600px;
+    max-width:700px;
     animation:fade .6s ease;
 }
 
@@ -97,7 +102,7 @@ button:hover{transform:scale(1.05);}
     to{opacity:1; transform:translateY(0);}
 }
 
-/* PHOTO */
+/* 📸 Photo Layout */
 .photo-section{
     margin-top:30px;
     display:flex;
@@ -174,7 +179,6 @@ button:hover{transform:scale(1.05);}
 
 </div>
 
-<!-- 🎵 แก้ audio สำหรับ iPhone -->
 <audio id="bgm" loop playsinline preload="auto">
     <source src="music.mp3" type="audio/mpeg">
 </audio>
@@ -182,43 +186,44 @@ button:hover{transform:scale(1.05);}
 <script>
 const music = document.getElementById("bgm");
 
-/* 🎵 เริ่มเพลงแบบ iPhone-safe + fade in */
+/* 🎵 iPhone-safe */
 function startMusic(){
     if(!music.paused) return;
-
-    music.volume = 0;
+    music.volume=0;
     music.play().then(()=>{
-        let fade = setInterval(()=>{
-            if(music.volume < 0.6){
-                music.volume += 0.05;
-            }else{
-                clearInterval(fade);
-            }
+        let fade=setInterval(()=>{
+            if(music.volume<0.7){
+                music.volume+=0.05;
+            }else clearInterval(fade);
         },200);
     }).catch(()=>{});
 }
 
-/* ❤️ หัวใจลอย */
+document.addEventListener("click",startMusic,{once:true});
+document.addEventListener("touchstart",startMusic,{once:true});
+
+/* ❤️ หัวใจ */
 function createHeart(){
     const heart=document.createElement("div");
-    heart.classList.add("heart");
+    heart.className="heart";
     heart.innerHTML="💖";
     heart.style.left=Math.random()*100+"%";
     heart.style.fontSize=(15+Math.random()*25)+"px";
     heart.style.animationDuration=(5+Math.random()*5)+"s";
+
+    heart.onclick=function(){
+        heart.innerHTML="💥";
+        heart.style.animation="explode .5s forwards";
+        setTimeout(()=>heart.remove(),500);
+    };
+
     document.getElementById("hearts").appendChild(heart);
-    setTimeout(()=>{heart.remove();},10000);
+    setTimeout(()=>heart.remove(),10000);
 }
 setInterval(createHeart,400);
 
-/* 📱 บังคับให้ iPhone ยอมเล่นเสียงเมื่อแตะจอ */
-document.addEventListener("touchstart", function firstTouch(){
-    startMusic();
-    document.removeEventListener("touchstart", firstTouch);
-});
-
-/* PHOTO DATA */
-const photos = [
+/* 📸 รูปครบ 20 */
+const photos=[
 {src:"photo1.jpg",text:"วันแรกของเรา 💕"},
 {src:"photo2.jpg",text:"วันที่หัวเราะไม่หยุด 😂"},
 {src:"photo3.jpg",text:"โมเมนต์อบอุ่นที่สุด 🥰"},
@@ -250,7 +255,7 @@ function checkPass(){
     if(pass==="280418"){
         document.getElementById("login").classList.add("hidden");
         document.getElementById("valentine").classList.remove("hidden");
-        startMusic(); // เล่นหลังจากกดจริง
+        startMusic();
     }else{
         alert("รหัสผิดนะ 🤭");
     }
@@ -259,7 +264,7 @@ function checkPass(){
 function nextPage(){
     pages[currentPage].classList.remove("active");
     currentPage++;
-    if(currentPage >= pages.length) return;
+    if(currentPage>=pages.length) return;
     pages[currentPage].classList.add("active");
 
     if(currentPage===3 && !openedPhotos){
@@ -283,7 +288,7 @@ function showPhotos(){
         setTimeout(()=>{
             card.style.opacity="1";
             card.style.transform="scale(1) translateY(0)";
-        },index*300);
+        },index*200);
     });
 }
 </script>
