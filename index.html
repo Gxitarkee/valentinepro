@@ -154,44 +154,47 @@ button:hover{transform:scale(1.05);}
 <div class="hearts" id="hearts"></div>
 
 <div class="screen" id="login">
-    <h1>🔐 ใส่รหัสก่อนเปิดความทรงจำ 💕</h1>
-    <input type="password" id="password" placeholder="รหัสของเรา">
-    <button onclick="checkPass()">เปิดเลย 💘</button>
+    <h1>🔐 ใส่รหัสก่อนครับพี่ 💕</h1>
+  <h2>🔐 วันเกิดพี่วันเกิดเค้าวันครบรอบครับ 💕</h2>
+    <input type="password" id="password" placeholder="ใส่รหัสมาอย่าลีลา">
+    <button onclick="checkPass()">เปิดเลยรออะไยยย 💘</button>
 </div>
 
 <div class="screen hidden" id="valentine">
 
     <div class="page active">
         <h1>Happy Valentine’s Day 🤍</h1>
-        <p>วันนี้เป็นวันพิเศษของเรา 💕</p>
-        <button onclick="nextPage()">ถัดไป ➜</button>
+        <p>ล่วงหน้า 1 วันนะ อยากเป็นคนแรกอะ 💕</p>
+        <button onclick="nextPage()">กดต่อรอไรอี๊ก ➜</button>
     </div>
 
     <div class="page">
-        <h2>ขอบคุณที่เข้ามาในชีวิตเค้า</h2>
-        <p>ตั้งแต่วันนั้น ทุกอย่างมันดีขึ้นมากเลยนะ 🥹</p>
-        <button onclick="nextPage()">ถัดไป ➜</button>
+        <h2>วาเลนไทน์ปีที่ 2 แล้วนะ เริ่ดเกินน</h2>
+        <p>ตั้งใจรักพี่เหมือนเดิมทุกๆปี ทุกๆวัน 🥹</p>
+        <button onclick="nextPage()">อย่าเขินจนลืมกด➜</button>
     </div>
 
     <div class="page">
         <h2>อยู่ข้างกันไปนาน ๆ นะ</h2>
-        <p>ไม่ว่าจะเกิดอะไรขึ้น เค้าจะจับมือเธอไว้ 🤍</p>
-        <button onclick="nextPage()">ถัดไป ➜</button>
+        <p>ไม่ว่าจะเกิดอะไรขึ้น เค้าจะจับมือพี่ไว้ 🤍</p>
+        <button onclick="nextPage()">ซึ้งอะ กดอีกๆ ➜</button>
     </div>
 
     <div class="page">
-        <h2>ความทรงจำของเรา 💘</h2>
+        <h2>แวะรับชมสิ่งน่าสนใจสักครู่ 💘</h2>
         <div class="photo-section" id="photoSection"></div>
-        <button onclick="nextPage()">ถัดไป ➜</button>
+        <button onclick="nextPage()">น่ารักอะดิ กดอีกดิ้ๆ  ➜</button>
     </div>
 
 <div class="page">
-    <h1>รักที่สุดเลย ❤️</h1>
-    <p>และจะรักแบบนี้ตลอดไป ✨</p>
+    <h1>หมดแล้ววววว ขอบคุณที่ดูจนจบ น่ารักมั้ย ❤️</h1>
+  <h1>มีแฟนเป็นเด็กวิศวะคอมก็งี้แหละ เขียนโค้ดจีบแฟนน</h1>
+    <p>สุดท้ายละๆ น้องกีต้าร้ากๆพี่น้ำอ้อยนะ ✨</p>
 
     <p style="margin-top:25px; font-size:18px;">
-        เพลงนี้เค้าให้พี่นะ อย่าลืมกดฟังนะครับ 💕
+        เพลงนี้เค้าให้พี่นะ อย่าลืมกดฟัง แปลไม่ออกเดี๋ยวแปลให้ 💕
     </p>
+    <p>ถ้าเขินมากกก ฟังจบก็อย่าลืมโทรมาบอกรักนะ ✨</p>
 
     <!-- ปุ่มกด -->
     <a href="https://youtu.be/dCEvQ69aGYs?si=Kyuurq79sSSB2U4l"
@@ -241,26 +244,26 @@ function createHeart(){
 setInterval(createHeart,400);
 
 const photos=[
-{src:"photo1.jpg",text:"วันแรกของเรา 💕"},
-{src:"photo2.jpg",text:"วันที่หัวเราะไม่หยุด 😂"},
-{src:"photo3.jpg",text:"โมเมนต์อบอุ่นที่สุด 🥰"},
-{src:"photo4.jpg",text:"ทริปที่ไม่มีวันลืม ✈️"},
-{src:"photo5.jpg",text:"วันที่กอดแน่นที่สุด 🤍"},
-{src:"photo6.jpg",text:"วันธรรมดาที่พิเศษ ✨"},
-{src:"photo7.jpg",text:"รูปที่เค้าชอบที่สุด 💗"},
-{src:"photo8.jpg",text:"เธอยิ้มหวานมาก 😍"},
-{src:"photo9.jpg",text:"ช่วงเวลาที่คิดถึง 🫶"},
-{src:"photo10.jpg",text:"ความทรงจำตลอดไป 💞"},
-{src:"photo11.jpg",text:"อีกหนึ่งความสุข 🌷"},
-{src:"photo12.jpg",text:"วันที่หัวใจเต้นแรง 💓"},
-{src:"photo13.jpg",text:"ความสุขเล็ก ๆ ของเรา 🌸"},
-{src:"photo14.jpg",text:"อยู่ด้วยกันแล้วสบายใจ 🤍"},
-{src:"photo15.jpg",text:"เสียงหัวเราะของเธอ 🎶"},
-{src:"photo16.jpg",text:"ภาพที่มองแล้วใจละลาย 💖"},
-{src:"photo17.jpg",text:"วันธรรมดาที่มีค่า 💫"},
-{src:"photo18.jpg",text:"ช่วงเวลาที่อยากหยุดเวลา ⏳"},
-{src:"photo19.jpg",text:"ขอบคุณที่อยู่ข้างกัน 💕"},
-{src:"photo20.jpg",text:"และจะรักแบบนี้ตลอดไป ❤️"}
+{src:"photo1.jpg",text:"ซื้อตั๋วเพื่อให้ทิ้งตั๋ว เก่งจริง💕"},
+{src:"photo2.jpg",text:"แต่อันนี้น่าร้ากอะ 😂"},
+{src:"photo3.jpg",text:"วันเกิดพี่ปีแรก จำได้บ้างยัง 🥰"},
+{src:"photo4.jpg",text:"ไปเที่ยวไม่เคยมีรูปคู่เบย"},
+{src:"photo5.jpg",text:"ปลุกมากินอาหารเช้าทุกวันทำไม 🤍"},
+{src:"photo6.jpg",text:"น่ารักอีกอันนี้ ✨"},
+{src:"photo7.jpg",text:"รูปที่เค้าชอบที่สุด เพราะทำบุญ 💗"},
+{src:"photo8.jpg",text:"ATV หวานเจีียบ 😍"},
+{src:"photo9.jpg",text:"เอ๊า มีไออ้วนตัวที่ 1 🫶"},
+{src:"photo10.jpg",text:"ถ่ายตู้ครั้งแรกมั้ง น่ารักดี💞"},
+{src:"photo11.jpg",text:"ชอบอะดิๆ จัดไป 🌷"},
+{src:"photo12.jpg",text:"เอ๊า ไออ้วนตัวที่ 2 💓"},
+{src:"photo13.jpg",text:"คำถามคือเลิกทำไมทุกวัน 🌸"},
+{src:"photo14.jpg",text:"อยู่ด้วยกันแล้วสบายใจที่สุด 🤍"},
+{src:"photo15.jpg",text:"คอนเสริตนี้ไม่ค่อยโอ แต่เป็นงานแรกของเรา 🎶"},
+{src:"photo16.jpg",text:"คิดถึงอ่างนาง คิดถึงภูเก็ต💖"},
+{src:"photo17.jpg",text:"ได้เมาด้วยกันอีกวันไหนงะ 💫"},
+{src:"photo18.jpg",text:"อันนี้เค้าหล่อไม่มีไรมาก⏳"},
+{src:"photo19.jpg",text:" 37 ปี โตกี่โมง ง้องแง้งท้างงวัน 💕"},
+{src:"photo20.jpg",text:"ตอนนั้นผมสั้น ตอนนี้ยาวแล้วนะ ❤️"}
 ];
 
 let currentPage=0;
@@ -273,7 +276,7 @@ function checkPass(){
         document.getElementById("login").classList.add("hidden");
         document.getElementById("valentine").classList.remove("hidden");
     }else{
-        alert("รหัสผิดนะ 🤭");
+        alert("ใบ้แล้วยังผิดอีกไอเจ๊นี้ 🤭");
     }
 }
 
@@ -310,4 +313,5 @@ function showPhotos(){
 
 </body>
 </html>
+
 
